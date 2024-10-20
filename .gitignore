@@ -24,3 +24,6 @@ yarn-error.log*
 
 #Virtual environment
 /venv
+
+#Chatbot Credentials
+credentials.json
