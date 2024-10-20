@@ -1,0 +1,13 @@
+.chat_message{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 190px;
+    background-color: #F0F0F0;
+  }
+
+  .welcome_message{
+    color: #4F4C4C;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight: 300;
+  }

@@ -1,0 +1,16 @@
+# Ignorar archivos ejecutables
+*.exe
+*.dll
+*.bat
+*.sh
+
+# Ignorar node_modules
+node_modules/
+
+# Ignorar archivos de logs y temporales
+*.log
+.DS_Store
+
+# Ignorar carpetas de configuración del editor
+.vscode/
+.idea/

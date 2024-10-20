@@ -1,0 +1,101 @@
+.bar_text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #CBCBCB;
+    border-radius: 50px; 
+    border: 1px solid #ccc;
+    width: 90%; 
+    /* max-width: 800px;  */
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 40px; 
+  }
+
+  .bar_text .text {
+    width: 100%;
+    height: 100%; 
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    padding: 0 30px; /* Ajusta el padding para centrar el texto horizontalmente */
+    resize: none;
+    background-color: transparent;
+    overflow-y: auto; 
+    white-space: normal; 
+    word-wrap: break-word;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    display: flex;
+    align-items: center; /* Centra verticalmente el texto */
+    justify-content:center; /* Centra horizontalmente el texto */
+    text-align:left; /* Asegura que el texto esté alineado al centro */
+    color: #4F4C4C;
+}
+  
+  .bar_text img.send {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    margin-left: 30px;
+    
+  }
+
+.chat_history {
+  max-height: 70vh; /* Usa un valor relativo a la altura de la ventana */
+  overflow-y: auto;  /* Habilita el scroll vertical */
+  margin-bottom: 3px;
+  padding-right: 10px; /* Espacio para evitar que el contenido se superponga al borde derecho */
+}
+
+.user-message, .bot-message {
+    padding: 10px 15px;
+    margin-top: 15px;
+    border-radius: 40px;
+    max-width: 55%; /* Ajusta el ancho máximo */
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.user-message {
+    background-color: #B5B5B5;
+    margin-left: auto; /* Empuja los mensajes del usuario a la derecha */
+    margin-right: 70px; /* Espacio a la derecha del mensaje */
+    text-align: left;
+    color: #4F4C4C;
+}
+
+.bot-message {
+    background-color: #e2e3e5;
+    margin-left: 70px; /* Espacio a la izquierda del mensaje */
+    margin-right: auto; /* Empuja los mensajes del bot a la izquierda */
+    text-align: left;
+    color: #4F4C4C;
+}
+.loader {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.loader .dot {
+  width: 8px;
+  height: 8px;
+  margin: 0 5px;
+  background-color: #4F4C4C;
+  border-radius: 50%;
+  animation: dot-blink 1s infinite ease-in-out;
+}
+
+@keyframes dot-blink {
+  0%, 80%, 100% {
+      opacity: 0;
+  }
+  40% {
+      opacity: 1;
+  }
+}

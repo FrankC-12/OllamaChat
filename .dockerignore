@@ -1,0 +1,28 @@
+# Ignorar archivos de configuración
+*.env
+*.log
+
+# Ignorar directorios de desarrollo
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignorar directorios específicos
+tests/
+docs/
+local/
+
+# Ignorar archivos de versión
+.git
+.gitignore
+
+# Ignorar el directorio de node_modules
+node_modules/
+
+# Ignorar todos los archivos de la carpeta de build
+build/
+dist/
+
+
+
