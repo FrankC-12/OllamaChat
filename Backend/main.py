@@ -1,7 +1,6 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import ollama
-from .firebase_config import db  # Importar Firestore desde la configuración de Firebase
 from firebase_admin import firestore
 from datetime import datetime, timedelta
 
