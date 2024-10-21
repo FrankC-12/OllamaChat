@@ -7,18 +7,13 @@ from datetime import datetime, timedelta
 app = FastAPI()
 chat_history = []
 
-origins = [
-    # "http://localhost:5173",  # Origen permitido
-    # "https://chatbotia-7c27.onrender.com",  # Puedes agregar el dominio del backend si lo necesitas
-    "*",  # Este comodín permite todos los orígenes (solo para pruebas, no recomendado en producción)
-]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["https://chatbot-6636e.web.app/"],  # Cambia esto por la URL de tu frontend
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Permite todos los métodos (GET, POST, etc.)
+    allow_headers=["*"],  # Permite todos los encabezados
 )
 
 @app.get("/")
@@ -51,18 +46,18 @@ async def chat(request: Request):
         chat_history.append({"role": "user", "content": user_message})
         chat_history.append({"role": "bot", "content": assistant_response})
 
-        # Guardar el historial en Firebase Firestore
-        try:
-            doc_ref = db.collection("chatHistory").add({
-                "userMessage": user_message,
-                "botResponse": assistant_response,
-                "timestamp": firestore.SERVER_TIMESTAMP
-            })
-            print(f"Historial guardado con ID: {doc_ref.id}")
-        except Exception as e:
-            print(f"Error guardando el historial: {e}")
+        # # Guardar el historial en Firebase Firestore
+        # try:
+        #     doc_ref = db.collection("chatHistory").add({
+        #         "userMessage": user_message,
+        #         "botResponse": assistant_response,
+        #         "timestamp": firestore.SERVER_TIMESTAMP
+        #     })
+        #     print(f"Historial guardado con ID: {doc_ref.id}")
+        # except Exception as e:
+        #     print(f"Error guardando el historial: {e}")
 
-        return {"response": assistant_response, "chat_history": chat_history}
+        # return {"response": assistant_response, "chat_history": chat_history}
 
     return {"response": "No message provided."}
 
