@@ -20,7 +20,7 @@ app.add_middleware(
 async def read_root():
     return {"message": "API is running. Use the /chat endpoint to send messages."}
 
-@app.post("/chat")
+@app.post("/chat", tags=["Chat"])
 async def chat(request: Request):
     body = await request.json()
     user_message = body.get("message")
