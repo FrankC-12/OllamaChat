@@ -61,28 +61,28 @@ async def chat(request: Request):
 
     return {"response": "No message provided."}
 
-@app.get("/history/today")
-async def get_today_history():
-    try:
-        # Obtener la fecha de hoy
-        today_start = datetime.combine(datetime.today(), datetime.min.time())
-        today_end = today_start + timedelta(days=1)
+# @app.get("/history/today")
+# async def get_today_history():
+#     try:
+#         # Obtener la fecha de hoy
+#         today_start = datetime.combine(datetime.today(), datetime.min.time())
+#         today_end = today_start + timedelta(days=1)
         
-        # Consultar en Firestore los documentos cuya fecha esté entre el rango de hoy
-        chat_history_ref = db.collection("chatHistory")
-        query = chat_history_ref.where("timestamp", ">=", today_start).where("timestamp", "<", today_end)
-        docs = query.stream()
+#         # Consultar en Firestore los documentos cuya fecha esté entre el rango de hoy
+#         chat_history_ref = db.collection("chatHistory")
+#         query = chat_history_ref.where("timestamp", ">=", today_start).where("timestamp", "<", today_end)
+#         docs = query.stream()
 
-        history = []
-        for doc in docs:
-            doc_data = doc.to_dict()
-            history.append({
-                "userMessage": doc_data.get("userMessage"),
-                "botResponse": doc_data.get("botResponse"),
-                "timestamp": doc_data.get("timestamp").isoformat() if doc_data.get("timestamp") else None
-            })
+#         history = []
+#         for doc in docs:
+#             doc_data = doc.to_dict()
+#             history.append({
+#                 "userMessage": doc_data.get("userMessage"),
+#                 "botResponse": doc_data.get("botResponse"),
+#                 "timestamp": doc_data.get("timestamp").isoformat() if doc_data.get("timestamp") else None
+#             })
         
-        return {"history": history}
+#         return {"history": history}
     
-    except Exception as e:
-        return {"error": f"Error al obtener el historial: {e}"}
+#     except Exception as e:
+#         return {"error": f"Error al obtener el historial: {e}"}
