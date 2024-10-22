@@ -1,17 +1,11 @@
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import ollama
 from firebase_admin import firestore
 from datetime import datetime, timedelta
-from pydantic import BaseModel
 
 app = FastAPI()
 chat_history = []
-
-class Message(BaseModel):
-
-    message: str
-
 
 
 app.add_middleware(
@@ -26,60 +20,46 @@ app.add_middleware(
 async def read_root():
     return {"message": "API is running. Use the /chat endpoint to send messages."}
 
+@app.post("/chat", tags=["Chat"])
+async def chat(request: Request):
+    body = await request.json()
+    user_message = body.get("message")
 
-
-
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-import httpx
-
-
-
-# Definir un modelo de datos para la solicitud (mensaje)
-class MessageRequest(BaseModel):
-    message: str
-
-@app.post("/chat")
-async def chat(message_request: MessageRequest):
-    user_message = message_request.message
-
-    if not user_message:
-        raise HTTPException(status_code=400, detail="Message cannot be empty")
-
-    # Instrucción clara para el modelo Ollama
+    # Instrucción clara para que Ollama solo responda preguntas sobre NetBeans y programación
     system_instruction = """
     You are a helpful assistant that only answers questions related to programming, the NetBeans IDE, or its shortcuts. 
     If the question is not related to these topics, respond with:
     'I can only answer questions about programming, NetBeans IDE, or its shortcuts.'
     """
 
-    # Preparar el payload para enviar a Ollama
-    payload = {
-        "model": "llama3.1",  # O el nombre del modelo que estás utilizando en Ollama
-        "messages": [
-            {"role": "system", "content": system_instruction},
-            {"role": "user", "content": user_message}
-        ],
-        "stream": False
-    }
+    if user_message:
+        messages = [
+            {"role": "system", "content": system_instruction},  # Instrucción para el modelo
+            {"role": "user", "content": user_message}            # Pregunta del usuario
+        ]
 
-    try:
-        # Llamada a Ollama a través de su API REST
-        async with httpx.AsyncClient() as client:
-            response = await client.post(f"{OLLAMA_API_URL}/chat", json=payload)
-            response.raise_for_status()
+        # Llamar al modelo Ollama para obtener la respuesta
+        response = ollama.chat(model='llama3.1', stream=False, messages=messages)
+        assistant_response = response.get("message", {}).get("content", "No response from model")
 
-        # Extraer la respuesta del modelo
-        ollama_response = response.json()
-        assistant_message = ollama_response.get("message", {}).get("content", "No response from model")
+        # Guardar el mensaje del usuario y la respuesta del bot en el historial
+        chat_history.append({"role": "user", "content": user_message})
+        chat_history.append({"role": "bot", "content": assistant_response})
 
-        return {"response": assistant_message}
+        # # Guardar el historial en Firebase Firestore
+        # try:
+        #     doc_ref = db.collection("chatHistory").add({
+        #         "userMessage": user_message,
+        #         "botResponse": assistant_response,
+        #         "timestamp": firestore.SERVER_TIMESTAMP
+        #     })
+        #     print(f"Historial guardado con ID: {doc_ref.id}")
+        # except Exception as e:
+        #     print(f"Error guardando el historial: {e}")
 
-    except httpx.HTTPStatusError as e:
-        raise HTTPException(status_code=e.response.status_code, detail="Error with Ollama service")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+        # return {"response": assistant_response, "chat_history": chat_history}
 
+    return {"response": "No message provided."}
 
 # @app.get("/history/today")
 # async def get_today_history():

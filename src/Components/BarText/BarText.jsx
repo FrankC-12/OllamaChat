@@ -14,7 +14,7 @@ function BarText() {
     const lastMessageRef = useRef(null);
 
     // Cambia la URL de tu API aquí
-    const API_URL = 'http://localhost:10000/docs'; // Reemplaza esto con tu URL de Render
+    const API_URL = 'http://127.0.0.1:5000'; // Reemplaza esto con tu URL de Render
 
     // Función para obtener el historial del día actual al cargar la página
     const loadTodayHistory = async () => {
@@ -70,7 +70,7 @@ function BarText() {
         setLoading(true);
 
         try {
-            const response = await fetch(`${API_URL}/chat`, {  // Cambié la URL aquí
+            const response = await fetch(`${API_URL}/ai`, {  // Cambié la URL aquí
                 method: 'POST',
                 mode: 'no-cors',
                 headers: {
