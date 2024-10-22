@@ -14,7 +14,7 @@ function BarText() {
     const lastMessageRef = useRef(null);
 
     // Cambia la URL de tu API aquí
-    const API_URL = 'https://ollamachat.onrender.com'; // Reemplaza esto con tu URL de Render
+    const API_URL = 'http://localhost:10000/docs'; // Reemplaza esto con tu URL de Render
 
     // Función para obtener el historial del día actual al cargar la página
     const loadTodayHistory = async () => {

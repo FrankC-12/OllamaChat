@@ -1,24 +1,24 @@
-version: '3.8'
-
 services:
   fastapi:
     build:
       context: .
       dockerfile: Dockerfile
+    ports:
+      - "10000:10000"  # Mapea el puerto 5000 de tu máquina al puerto 10000 del contenedor
     environment:
       - OLLAMA_API_URL=http://ollama:8080
-      - PORT=${PORT}  # Render asigna dinámicamente el puerto
+      - PORT=10000  # Establecer el puerto interno del contenedor
     env_file:
       - .env  # Asegúrate de que este archivo exista
     volumes:
-      - .:/app
+      - .:/app  # Monta tu código en el contenedor
     depends_on:
       - ollama
 
   ollama:
-    image: ollama/ollama:3.1
+    image: ollama/ollama:latest  # Cambia la etiqueta a "latest" o a una versión válida
     ports:
-      - "8080:8080"  # Mapea el puerto para el entorno local
+      - "8080:8080"  # Mapea el puerto para el uso local
     restart: always
     volumes:
-      - ./ollama_data:/data  # Asegúrate de que la ruta exista
+      - ./ollama_data:/data  # Monta un volumen local para los datos de Ollama
