@@ -16,13 +16,22 @@ function Navbar({ onSendMessage, chatHistory, loadTodayHistory, hideWelcomeMessa
     };
 
     // Alternar el historial modal con la carga de historial
+    // const toggleHistoryModal = async () => {
+    //     if (!isHistoryModalOpen) {
+    //         // Cargar historial solo cuando el modal se está abriendo
+    //         await loadTodayHistory();
+    //         hideWelcomeMessage();
+    //     }
+    //     setIsHistoryModalOpen(!isHistoryModalOpen);
+    // };
     const toggleHistoryModal = async () => {
+        setIsHistoryModalOpen(!isHistoryModalOpen);
+        
         if (!isHistoryModalOpen) {
-            // Cargar historial solo cuando el modal se está abriendo
+            // Cargar el historial de la fecha actual solo si se abre el modal
             await loadTodayHistory();
             hideWelcomeMessage();
         }
-        setIsHistoryModalOpen(!isHistoryModalOpen);
     };
 
     // Manejo de selección de nivel

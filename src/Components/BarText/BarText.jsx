@@ -47,39 +47,93 @@ function BarText() {
         }
     };
 
+    // const handleSend = async (presetMessage = null) => {
+    //     const messageToSend = presetMessage || message.trim();
+    //     if (messageToSend === '') return;
+
+    //     const timestamp = new Date();
+
+    //     const userMessage = {
+    //         role: 'user',
+    //         content: messageToSend,
+    //         timestamp: timestamp.toISOString(),
+    //     };
+
+    //     const updatedChatHistory = [...chatHistory, userMessage];
+
+    //     if (showWelcome) {
+    //         setShowWelcome(false);
+    //     }
+
+    //     setChatHistory(updatedChatHistory);
+    //     setMessage('');
+    //     setLoading(true);
+
+    //     try {
+    //         const response = await fetch(`${API_URL}/ai`, {  // Cambié la URL aquí
+    //             method: 'POST',
+    //             mode: 'no-cors',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Access-Control-Allow-Origin': '*'
+    //             },
+    //             body: JSON.stringify({ message: messageToSend }),
+    //         });
+
+    //         const data = await response.json();
+    //         setChatHistory([...updatedChatHistory, {
+    //             role: 'bot',
+    //             content: data.response,
+    //             timestamp: timestamp.toISOString(),
+    //         }]);
+    //     } catch (error) {
+    //         console.error('Error fetching data:', error); // Loguea el error
+    //         setChatHistory([...updatedChatHistory, {
+    //             role: 'bot',
+    //             content: 'Lo siento, ocurrió un error.',
+    //             timestamp: timestamp.toISOString(),
+    //         }]);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
     const handleSend = async (presetMessage = null) => {
         const messageToSend = presetMessage || message.trim();
         if (messageToSend === '') return;
-
+    
         const timestamp = new Date();
-
+    
         const userMessage = {
             role: 'user',
             content: messageToSend,
             timestamp: timestamp.toISOString(),
         };
-
+    
         const updatedChatHistory = [...chatHistory, userMessage];
-
+    
         if (showWelcome) {
             setShowWelcome(false);
         }
-
+    
         setChatHistory(updatedChatHistory);
         setMessage('');
         setLoading(true);
-
+    
         try {
             const response = await fetch(`${API_URL}/ai`, {  // Cambié la URL aquí
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify({ message: messageToSend }),
             });
-
+    
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+    
             const data = await response.json();
             setChatHistory([...updatedChatHistory, {
                 role: 'bot',
@@ -87,7 +141,7 @@ function BarText() {
                 timestamp: timestamp.toISOString(),
             }]);
         } catch (error) {
-            console.error('Error fetching data:', error); // Loguea el error
+            console.error('Error fetching data:', error); 
             setChatHistory([...updatedChatHistory, {
                 role: 'bot',
                 content: 'Lo siento, ocurrió un error.',
@@ -97,6 +151,7 @@ function BarText() {
             setLoading(false);
         }
     };
+    
 
     const hideWelcomeMessage = () => {
         setShowWelcome(false);
