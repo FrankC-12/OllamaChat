@@ -20,9 +20,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-
-
-#Chatbot Credentials
-credentials.json
 #Entorno virtual
 venv/
+
+# Credenciales
+chatbot-e10ff-firebase-adminsdk-o5erg-523c589a7a.json
+credentials.json
+
+#Variable de entorno
+.env

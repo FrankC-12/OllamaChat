@@ -6,10 +6,12 @@
 
 import firebase_admin
 from firebase_admin import credentials, firestore
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
-# Inicializa la aplicación de Firebase
-cred = credentials.Certificate("app/chatbot-e10ff-firebase-adminsdk-o5erg-523c589a7a.json")
+cred = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
 firebase_admin.initialize_app(cred)
 
 # Inicializa el cliente de Firestore
