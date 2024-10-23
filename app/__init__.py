@@ -32,7 +32,6 @@ def aiPost():
     print(f"message: {message}")
 
     # Combinar la instrucción del sistema con la consulta del usuario
-    system_instruction = "Assistant Instruction"
     full_query = f"{system_instruction}\nUser message: {message}"
 
     # Invocar el modelo con la consulta completa (full_query)
